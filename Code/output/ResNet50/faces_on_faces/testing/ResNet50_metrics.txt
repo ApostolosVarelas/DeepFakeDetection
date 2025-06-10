@@ -1,0 +1,57 @@
+Video-level metrics per aggregation method:
+
+Method: mean_prob
+  Accuracy : 0.8600
+  Precision: 0.8077
+  Recall   : 0.9130
+  F1       : 0.8571
+  MCC      : 0.7261
+  AP       : 0.9777
+  EER      : 0.0370
+
+Method: max_prob
+  Accuracy : 0.6000
+  Precision: 0.5349
+  Recall   : 1.0000
+  F1       : 0.6970
+  MCC      : 0.3724
+  AP       : 0.9120
+  EER      : 0.1111
+
+Method: min_prob
+  Accuracy : 0.6200
+  Precision: 1.0000
+  Recall   : 0.1739
+  F1       : 0.2963
+  MCC      : 0.3195
+  AP       : 0.9346
+  EER      : 0.0741
+
+Method: median_prob
+  Accuracy : 0.8600
+  Precision: 0.8077
+  Recall   : 0.9130
+  F1       : 0.8571
+  MCC      : 0.7261
+  AP       : 0.9395
+  EER      : 0.0370
+
+Method: trimmed_mean_prob
+  Accuracy : 0.8600
+  Precision: 0.8077
+  Recall   : 0.9130
+  F1       : 0.8571
+  MCC      : 0.7261
+  AP       : 0.9777
+  EER      : 0.0370
+
+Method: vote_percentage
+  Accuracy : 0.8800
+  Precision: 0.8148
+  Recall   : 0.9565
+  F1       : 0.8800
+  MCC      : 0.7713
+  AP       : 0.9750
+  EER      : 0.0741
+
+Best aggregation (by F1): vote_percentage
