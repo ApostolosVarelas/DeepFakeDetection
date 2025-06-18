@@ -115,7 +115,7 @@ def validate_video_level(model, val_loader, device):
 
     return val_loss, best_acc, best_f1, best_method, metrics_all
 
-def train_model(model, train_loader, val_loader, test_loader, device, output_folder):
+def train_model(model, train_loader, val_loader, device, output_folder):
     criterion = nn.CrossEntropyLoss()
     optimizer = optim.Adam(
         filter(lambda p: p.requires_grad, model.parameters()),
@@ -127,13 +127,13 @@ def train_model(model, train_loader, val_loader, test_loader, device, output_fol
     scaler = GradScaler()
     early_stop = 5
     no_improve = 0
-    best_val = float('inf')
+    best_val_loss = float('inf')
     model_path = os.path.join(output_folder, "Xception.pth")
 
     if os.path.exists(model_path):
         logging.warning("Xception already trained; loading.")
         model.load_state_dict(torch.load(model_path))
-        return test_loader, model
+        return model, None
 
     train_losses, train_accs = [], []
     val_losses, val_accs, val_f1s = [], [], []
@@ -184,14 +184,16 @@ def train_model(model, train_loader, val_loader, test_loader, device, output_fol
                         f"AUC: {met['auc']:.4f}, AP: {met['ap']:.4f}, EER: {met['eer']:.4f}\n")
             f.write(f"Best: {best_method}\n")
 
-        if val_loss < best_val:
-            best_val = val_loss
+        if val_loss < best_val_loss:
+            best_val_loss = val_loss
+            best_method_overall = best_method
             no_improve = 0
             torch.save(model.state_dict(), model_path)
+            logging.info(f"Saved new best model (loss={val_loss:.4f})")
         else:
             no_improve += 1
             if no_improve >= early_stop:
-                logging.info("Early stopping.")
+                logging.info("Early stopping triggered.")
                 break
 
     # ---- PLOT TRAINING CURVES ----
@@ -232,7 +234,7 @@ def train_model(model, train_loader, val_loader, test_loader, device, output_fol
     plt.savefig(os.path.join(output_folder, 'f1_vs_loss.png'))
     plt.close()
 
-    return test_loader, model
+    return model, best_method_overall
 
 def Xception_main(train_ds, val_ds, test_ds, device, output_folder):
     train_loader = DataLoader(train_ds, batch_size=BATCH_SIZE, shuffle=True,  num_workers=4, pin_memory=True)
@@ -265,4 +267,5 @@ def Xception_main(train_ds, val_ds, test_ds, device, output_folder):
 
     model = XceptionSE(backbone).to(device)
 
-    return train_model(model, train_loader, val_loader, test_loader, device, output_folder)
+    model, best_method = train_model(model, train_loader, val_loader, device, output_folder)
+    return test_loader, model, best_method
