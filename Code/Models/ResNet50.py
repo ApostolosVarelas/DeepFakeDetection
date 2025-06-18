@@ -123,7 +123,7 @@ def train_model(model, train_loader, val_loader, device, output_folder):
     if os.path.exists(model_path):
         logging.warning("ResNet50 model already trained. Loading weights.")
         model.load_state_dict(torch.load(model_path))
-        return model
+        return model, None
 
     train_losses, train_accs = [], []
     val_losses, val_accs, val_f1s = [], [], []
@@ -188,9 +188,10 @@ def train_model(model, train_loader, val_loader, device, output_folder):
 
         if val_loss < best_val_loss:
             best_val_loss = val_loss
+            best_method_overall = best_method
             no_improve_counter = 0
             torch.save(model.state_dict(), model_path)
-            logging.info(f"New best loss: {best_val_loss:.4f}. Model saved.")
+            logging.info(f"Epoch {epoch+1}: new best loss {val_loss:.4f}. Model saved.")
         else:
             no_improve_counter += 1
             if no_improve_counter >= early_stop_patience:
@@ -228,7 +229,8 @@ def train_model(model, train_loader, val_loader, device, output_folder):
     plt.savefig(os.path.join(output_folder, 'f1_vs_loss.png'))
     plt.close()
 
-    return model
+    model.best_agg_method = best_method_overall
+    return model, best_method_overall
 
 
 def ResNet50_main(train_dataset, val_dataset, test_dataset, device, output_folder):
@@ -272,5 +274,5 @@ def ResNet50_main(train_dataset, val_dataset, test_dataset, device, output_folde
     )
     model.to(device)
 
-    model = train_model(model, train_loader, val_loader, device, output_folder)
-    return test_loader, model
+    model, best_method = train_model(model, train_loader, val_loader, device, output_folder)
+    return test_loader, model, best_method
