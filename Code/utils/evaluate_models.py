@@ -218,78 +218,75 @@ def generate_heatmap_grid(model, model_type, device, video_path, transform, face
     return grid_img
 
 
-def _test_model(model, test_loader, device, model_type, out_dir, face_crop):
+def _test_model(model, test_loader, device, model_type, out_dir, face_crop, agg_method=None):
     os.makedirs(out_dir, exist_ok=True)
     video_dict = _collect_frame_predictions(model, test_loader, device)
 
-    best_f1, best_method = -1.0, None
-    metrics_all, best_errors, best_corrects = {}, [], []
+    valid_methods = [
+        "mean_prob", "max_prob", "min_prob",
+        "median_prob", "trimmed_mean_prob", "vote_percentage"
+    ]
 
-    for m in ["mean_prob","max_prob","min_prob","median_prob",
-              "trimmed_mean_prob","vote_percentage"]:
-        met = _aggregate_video_predictions(video_dict, m)
-        metrics_all[m] = met
-        if met["f1"] > best_f1:
-            best_f1, best_method = met["f1"], m
-            best_errors, best_corrects = met["errors"], met["corrects"]
+    if agg_method not in valid_methods:
+        raise ValueError(f"Invalid aggregation method '{agg_method}'. Must be one of: {valid_methods}")
 
-    if best_method is None:
-        logging.error("No valid predictions."); return
+    metrics = _aggregate_video_predictions(video_dict, agg_method)
+    metrics_all = {agg_method: metrics}
 
-    best = metrics_all[best_method]
-    _log_metrics(metrics_all, best_method, model_type, out_dir)
-    _write_csv(best_errors, "errors",  model_type, out_dir)
-    _write_csv(best_corrects,"correct",model_type, out_dir)
+    _log_metrics(metrics_all, agg_method, model_type, out_dir)
+    _write_csv(metrics["errors"],  "errors",  model_type, out_dir)
+    _write_csv(metrics["corrects"], "correct", model_type, out_dir)
 
-    labels_bin = label_binarize(best["labels"], classes=[0,1]).ravel()
-    cm = confusion_matrix(best["labels"], best["preds"])
-    plt.figure(figsize=(6,5))
+    labels_bin = label_binarize(metrics["labels"], classes=[0, 1]).ravel()
+    cm = confusion_matrix(metrics["labels"], metrics["preds"])
+    plt.figure(figsize=(6, 5))
     sns.heatmap(cm, annot=True, fmt="d", cmap="Blues",
-                xticklabels=["Real","Fake"], yticklabels=["Real","Fake"])
+                xticklabels=["Real", "Fake"], yticklabels=["Real", "Fake"])
     plt.xlabel("Predicted"); plt.ylabel("Actual")
-    plt.title(f"Confusion Matrix ({best_method})")
+    plt.title(f"Confusion Matrix ({agg_method})")
     plt.tight_layout()
-    plt.savefig(os.path.join(out_dir, f"{model_type}_confusion_matrix.png")); plt.close()
+    plt.savefig(os.path.join(out_dir, f"{model_type}_confusion_matrix.png"))
+    plt.close()
 
-    fpr, tpr, _ = roc_curve(labels_bin, best["scores"])
-    plt.figure(figsize=(6,5))
-    plt.plot(fpr, tpr, label=f"AUC = {auc(fpr,tpr):.2f}")
-    plt.plot([0,1],[0,1],"k--"); plt.xlabel("FPR"); plt.ylabel("TPR")
+    fpr, tpr, _ = roc_curve(labels_bin, metrics["scores"])
+    plt.figure(figsize=(6, 5))
+    plt.plot(fpr, tpr, label=f"AUC = {auc(fpr, tpr):.2f}")
+    plt.plot([0, 1], [0, 1], "k--")
+    plt.xlabel("FPR"); plt.ylabel("TPR")
     plt.title("ROC Curve"); plt.legend(); plt.tight_layout()
-    plt.savefig(os.path.join(out_dir, f"{model_type}_roc_curve.png")); plt.close()
+    plt.savefig(os.path.join(out_dir, f"{model_type}_roc_curve.png"))
+    plt.close()
 
-    prec, rec, _ = precision_recall_curve(labels_bin, best["scores"])
-    plt.figure(figsize=(6,5))
-    plt.plot(rec, prec, label=f"AP = {best['ap']:.2f}")
+    prec, rec, _ = precision_recall_curve(labels_bin, metrics["scores"])
+    plt.figure(figsize=(6, 5))
+    plt.plot(rec, prec, label=f"AP = {metrics['ap']:.2f}")
     plt.xlabel("Recall"); plt.ylabel("Precision")
     plt.title("Precision-Recall Curve"); plt.legend(); plt.tight_layout()
-    plt.savefig(os.path.join(out_dir, f"{model_type}_pr_curve.png")); plt.close()
+    plt.savefig(os.path.join(out_dir, f"{model_type}_pr_curve.png"))
+    plt.close()
 
     cam_dir = os.path.join(out_dir, 'cams')
     os.makedirs(cam_dir, exist_ok=True)
-    
     categories = ['FN', 'FP', 'TP', 'TN']
     for cat in categories:
         os.makedirs(os.path.join(cam_dir, cat), exist_ok=True)
-    
+
     selected_videos = {cat: [] for cat in categories}
-    
-    for record in best_errors + best_corrects:
+    for record in metrics["errors"] + metrics["corrects"]:
         cat = record['result_type']
         if len(selected_videos[cat]) < 3:
             selected_videos[cat].append(record)
-    
+
     for cat, records in selected_videos.items():
         for record in records:
             video_path = os.path.join(
                 READ_DATASET if record['true_label'] == 0 else FAKE_DATASET,
                 record['video_name']
             )
-            
             if not os.path.exists(video_path):
                 logging.warning(f"Video not found: {video_path}")
                 continue
-                
+
             grid = generate_heatmap_grid(
                 model=model,
                 model_type=model_type,
@@ -298,19 +295,20 @@ def _test_model(model, test_loader, device, model_type, out_dir, face_crop):
                 transform=VAL_TEST_TRANSFORM,
                 face_crop=face_crop
             )
-            
+
             if grid:
                 output_path = os.path.join(cam_dir, cat, f"{record['video_name']}.png")
                 grid.save(output_path)
                 logging.info(f"Saved heatmap grid for {record['video_name']} to {output_path}")
 
 
-def test_model_faces(model, test_loader, device, model_type, output_folder):
-    """Evaluation routine for *face-cropped* data."""
-    _test_model(model, test_loader, device, model_type,
-                output_folder, face_crop=True)
 
-def test_model_full_frame(model, test_loader, device, model_type, output_folder):
-    """Evaluation routine for *full-frame* data."""
+def test_model_faces(model, test_loader, device, model_type, output_folder, agg_method=None):
+    """Evaluation routine for face‐cropped data."""
     _test_model(model, test_loader, device, model_type,
-                output_folder, face_crop=False)
+                output_folder, face_crop=True, agg_method=agg_method)
+
+def test_model_full_frame(model, test_loader, device, model_type, output_folder, agg_method=None):
+    """Evaluation routine for full‐frame data."""
+    _test_model(model, test_loader, device, model_type,
+                output_folder, face_crop=False, agg_method=agg_method)
