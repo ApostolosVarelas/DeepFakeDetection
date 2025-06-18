@@ -166,7 +166,7 @@ def train_model(model, train_loader, val_loader, device, output_folder):
     if os.path.exists(model_path):
         logging.warning("SwinTransformer already trained; loading weights.")
         model.load_state_dict(torch.load(model_path))
-        return model
+        return model, None
 
     train_losses, val_losses = [], []
     train_accs, val_accs, val_f1s = [], [], []
@@ -230,8 +230,10 @@ def train_model(model, train_loader, val_loader, device, output_folder):
 
         if val_loss < best_val_loss:
             best_val_loss = val_loss
+            best_method_overall = best_method
             no_improve = 0
             torch.save(model.state_dict(), model_path)
+            logging.info(f"Epoch {epoch+1}: new best val loss {val_loss:.4f}, model saved.")
         else:
             no_improve += 1
             if no_improve >= early_stop:
@@ -275,7 +277,8 @@ def train_model(model, train_loader, val_loader, device, output_folder):
     plt.savefig(os.path.join(output_folder, 'f1_vs_loss.png'))
     plt.close()
 
-    return model
+    model.best_agg_method = best_method_overall
+    return model, best_method_overall
 
 
 def SwinTransformer_main(train_ds, val_ds, test_ds, device, output_folder):
@@ -294,5 +297,5 @@ def SwinTransformer_main(train_ds, val_ds, test_ds, device, output_folder):
     for p in model.se.parameters():
         p.requires_grad = True
 
-    model = train_model(model, train_loader, val_loader, device, output_folder)
-    return test_loader, model
+    model, best_method = train_model(model, train_loader, val_loader, device, output_folder)
+    return test_loader, model, best_method
