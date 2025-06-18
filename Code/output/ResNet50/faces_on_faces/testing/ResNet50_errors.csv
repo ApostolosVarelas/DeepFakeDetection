@@ -1,7 +1,0 @@
-video_name,total_frames,true_label,predicted_label,method,confidence_score,result_type
-07_14__exit_phone_room__P9QFO50U.mp4,395,1,0,vote_percentage,0.2,FN
-06__walking_down_indoor_hall_disgust.mp4,1373,0,1,vote_percentage,0.5,FP
-01__walking_down_street_outside_angry.mp4,610,0,1,vote_percentage,0.7333,FP
-03__walking_down_indoor_hall_disgust.mp4,1465,0,1,vote_percentage,0.6,FP
-09__talking_angry_couch.mp4,1325,0,1,vote_percentage,0.7,FP
-01__walking_down_indoor_hall_disgust.mp4,834,0,1,vote_percentage,0.6333,FP

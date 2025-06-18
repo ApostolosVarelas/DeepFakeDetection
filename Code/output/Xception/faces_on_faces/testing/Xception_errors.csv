@@ -1,6 +1,0 @@
-video_name,total_frames,true_label,predicted_label,method,confidence_score,result_type
-14__podium_speech_happy.mp4,1326,0,1,mean_prob,0.5421,FP
-07_14__exit_phone_room__P9QFO50U.mp4,395,1,0,mean_prob,0.4467,FN
-07_06__outside_talking_still_laughing__NMGYPBXE.mp4,855,1,0,mean_prob,0.2915,FN
-03__walking_down_indoor_hall_disgust.mp4,1465,0,1,mean_prob,0.5689,FP
-09__talking_angry_couch.mp4,1325,0,1,mean_prob,0.7128,FP
