@@ -1,0 +1,12 @@
+Video-level metrics per aggregation method:
+
+Method: median_prob
+  Accuracy : 0.5400
+  Precision: 0.5000
+  Recall   : 0.5217
+  F1       : 0.5106
+  MCC      : 0.0771
+  AP       : 0.4639
+  EER      : 0.4074
+
+Best aggregation (by F1): median_prob
