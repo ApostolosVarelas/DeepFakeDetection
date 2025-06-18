@@ -1,0 +1,9 @@
+video_name,total_frames,true_label,predicted_label,method,confidence_score,result_type
+07_14__exit_phone_room__P9QFO50U.mp4,395,1,0,mean_prob,0.4192,FN
+07_03__walking_outside_cafe_disgusted__F0YYEA5W.mp4,477,1,0,mean_prob,0.3131,FN
+06__walking_and_outside_surprised.mp4,1015,0,1,mean_prob,0.5067,FP
+07_06__outside_talking_still_laughing__NMGYPBXE.mp4,855,1,0,mean_prob,0.1667,FN
+03_04__talking_angry_couch__T04P6ELC.mp4,1453,1,0,mean_prob,0.2307,FN
+01__walking_outside_cafe_disgusted.mp4,306,0,1,mean_prob,0.7613,FP
+09__talking_angry_couch.mp4,1325,0,1,mean_prob,0.7164,FP
+01__walking_and_outside_surprised.mp4,1085,0,1,mean_prob,0.7076,FP
