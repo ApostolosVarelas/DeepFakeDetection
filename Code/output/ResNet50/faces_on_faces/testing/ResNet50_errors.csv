@@ -1,0 +1,12 @@
+video_name,total_frames,true_label,predicted_label,method,confidence_score,result_type
+09_18__outside_talking_pan_laughing__3VP8836C.mp4,733,1,0,mean_prob,0.208,FN
+07_14__exit_phone_room__P9QFO50U.mp4,395,1,0,mean_prob,0.1424,FN
+09_02__walking_down_street_outside_angry__9TDCEK1Q.mp4,425,1,0,mean_prob,0.139,FN
+07_03__walking_outside_cafe_disgusted__F0YYEA5W.mp4,477,1,0,mean_prob,0.3576,FN
+01_27__outside_talking_still_laughing__ZYCZ30C0.mp4,737,1,0,mean_prob,0.4494,FN
+07_06__outside_talking_still_laughing__NMGYPBXE.mp4,855,1,0,mean_prob,0.1278,FN
+03_04__talking_angry_couch__T04P6ELC.mp4,1453,1,0,mean_prob,0.093,FN
+04_07__exit_phone_room__ITC0C48B.mp4,328,1,0,mean_prob,0.1253,FN
+08_05__walk_down_hall_angry__FBICSP2C.mp4,276,1,0,mean_prob,0.474,FN
+09__talking_angry_couch.mp4,1325,0,1,mean_prob,0.5286,FP
+08_28__outside_talking_pan_laughing__8BC35RFU.mp4,591,1,0,mean_prob,0.4054,FN
