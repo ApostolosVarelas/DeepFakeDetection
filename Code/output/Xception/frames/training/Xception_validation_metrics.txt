@@ -1,0 +1,45 @@
+
+Epoch 1
+mean_prob -> Acc: 0.7000, Prec: 0.6207, Rec: 0.8182, F1: 0.7059, MCC: 0.4278, AUC: 0.6997, AP: 0.6174, EER: 0.3214
+max_prob -> Acc: 0.6000, Prec: 0.5278, Rec: 0.8636, F1: 0.6552, MCC: 0.2836, AUC: 0.6705, AP: 0.5453, EER: 0.3214
+min_prob -> Acc: 0.6400, Prec: 0.6111, Rec: 0.5000, F1: 0.5500, MCC: 0.2585, AUC: 0.6867, AP: 0.6187, EER: 0.3214
+median_prob -> Acc: 0.6800, Prec: 0.6000, Rec: 0.8182, F1: 0.6923, MCC: 0.3948, AUC: 0.6851, AP: 0.5783, EER: 0.3214
+trimmed_mean_prob -> Acc: 0.7000, Prec: 0.6207, Rec: 0.8182, F1: 0.7059, MCC: 0.4278, AUC: 0.6964, AP: 0.5931, EER: 0.3214
+vote_percentage -> Acc: 0.6800, Prec: 0.6000, Rec: 0.8182, F1: 0.6923, MCC: 0.3948, AUC: 0.6972, AP: 0.5894, EER: 0.3214
+Best: mean_prob
+
+Epoch 2
+mean_prob -> Acc: 0.6800, Prec: 0.6154, Rec: 0.7273, F1: 0.6667, MCC: 0.3677, AUC: 0.6769, AP: 0.5928, EER: 0.2857
+max_prob -> Acc: 0.6600, Prec: 0.5806, Rec: 0.8182, F1: 0.6792, MCC: 0.3619, AUC: 0.6510, AP: 0.5363, EER: 0.3214
+min_prob -> Acc: 0.6800, Prec: 0.6364, Rec: 0.6364, F1: 0.6364, MCC: 0.3506, AUC: 0.6932, AP: 0.6104, EER: 0.3214
+median_prob -> Acc: 0.6800, Prec: 0.6154, Rec: 0.7273, F1: 0.6667, MCC: 0.3677, AUC: 0.6737, AP: 0.5831, EER: 0.2857
+trimmed_mean_prob -> Acc: 0.6800, Prec: 0.6154, Rec: 0.7273, F1: 0.6667, MCC: 0.3677, AUC: 0.6737, AP: 0.5901, EER: 0.2857
+vote_percentage -> Acc: 0.6800, Prec: 0.6154, Rec: 0.7273, F1: 0.6667, MCC: 0.3677, AUC: 0.7127, AP: 0.5992, EER: 0.3214
+Best: max_prob
+
+Epoch 3
+mean_prob -> Acc: 0.7000, Prec: 0.6296, Rec: 0.7727, F1: 0.6939, MCC: 0.4139, AUC: 0.6834, AP: 0.6137, EER: 0.3571
+max_prob -> Acc: 0.6200, Prec: 0.5455, Rec: 0.8182, F1: 0.6545, MCC: 0.2960, AUC: 0.6071, AP: 0.5343, EER: 0.4286
+min_prob -> Acc: 0.7000, Prec: 0.6667, Rec: 0.6364, F1: 0.6512, MCC: 0.3886, AUC: 0.7159, AP: 0.6296, EER: 0.2857
+median_prob -> Acc: 0.6800, Prec: 0.6071, Rec: 0.7727, F1: 0.6800, MCC: 0.3799, AUC: 0.6721, AP: 0.5535, EER: 0.3571
+trimmed_mean_prob -> Acc: 0.7000, Prec: 0.6296, Rec: 0.7727, F1: 0.6939, MCC: 0.4139, AUC: 0.6834, AP: 0.6130, EER: 0.3571
+vote_percentage -> Acc: 0.6800, Prec: 0.6071, Rec: 0.7727, F1: 0.6800, MCC: 0.3799, AUC: 0.7240, AP: 0.6243, EER: 0.2500
+Best: mean_prob
+
+Epoch 4
+mean_prob -> Acc: 0.7400, Prec: 0.6667, Rec: 0.8182, F1: 0.7347, MCC: 0.4947, AUC: 0.6851, AP: 0.6061, EER: 0.3214
+max_prob -> Acc: 0.6600, Prec: 0.5806, Rec: 0.8182, F1: 0.6792, MCC: 0.3619, AUC: 0.6526, AP: 0.5430, EER: 0.3929
+min_prob -> Acc: 0.6400, Prec: 0.6111, Rec: 0.5000, F1: 0.5500, MCC: 0.2585, AUC: 0.7597, AP: 0.6717, EER: 0.2857
+median_prob -> Acc: 0.7200, Prec: 0.6429, Rec: 0.8182, F1: 0.7200, MCC: 0.4610, AUC: 0.6948, AP: 0.6001, EER: 0.3214
+trimmed_mean_prob -> Acc: 0.7400, Prec: 0.6667, Rec: 0.8182, F1: 0.7347, MCC: 0.4947, AUC: 0.6916, AP: 0.6336, EER: 0.3214
+vote_percentage -> Acc: 0.7200, Prec: 0.6429, Rec: 0.8182, F1: 0.7200, MCC: 0.4610, AUC: 0.7102, AP: 0.5896, EER: 0.2857
+Best: mean_prob
+
+Epoch 5
+mean_prob -> Acc: 0.7400, Prec: 0.6667, Rec: 0.8182, F1: 0.7347, MCC: 0.4947, AUC: 0.7062, AP: 0.6447, EER: 0.3214
+max_prob -> Acc: 0.6400, Prec: 0.5588, Rec: 0.8636, F1: 0.6786, MCC: 0.3489, AUC: 0.6461, AP: 0.5376, EER: 0.3929
+min_prob -> Acc: 0.6600, Prec: 0.6316, Rec: 0.5455, F1: 0.5854, MCC: 0.3022, AUC: 0.7500, AP: 0.6607, EER: 0.2857
+median_prob -> Acc: 0.7400, Prec: 0.6667, Rec: 0.8182, F1: 0.7347, MCC: 0.4947, AUC: 0.6981, AP: 0.5912, EER: 0.3214
+trimmed_mean_prob -> Acc: 0.7400, Prec: 0.6667, Rec: 0.8182, F1: 0.7347, MCC: 0.4947, AUC: 0.7029, AP: 0.6516, EER: 0.3214
+vote_percentage -> Acc: 0.7200, Prec: 0.6429, Rec: 0.8182, F1: 0.7200, MCC: 0.4610, AUC: 0.7289, AP: 0.6114, EER: 0.2857
+Best: mean_prob
