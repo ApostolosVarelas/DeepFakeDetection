@@ -153,8 +153,9 @@ def prepare_data_faces(real_dataset_path: str, fake_dataset_path: str):
     Returns: train_ds, val_ds, test_ds
     """
     random.seed(RANDOM_SEED)
-    real_videos = glob.glob(os.path.join(real_dataset_path, "*.mp4"))
-    fake_videos = glob.glob(os.path.join(fake_dataset_path, "*.mp4"))
+    real_videos = sorted(glob.glob(os.path.join(real_dataset_path, "*.mp4")))
+    fake_videos = sorted(glob.glob(os.path.join(fake_dataset_path, "*.mp4")))
+    
     vids = [(v, 0) for v in real_videos] + [(v, 1) for v in fake_videos]
     random.shuffle(vids)
 
@@ -180,8 +181,9 @@ def prepare_data_full_frame(real_dataset_path: str, fake_dataset_path: str):
     Returns: train_ds, val_ds, test_ds
     """
     random.seed(RANDOM_SEED)
-    real_videos = glob.glob(os.path.join(real_dataset_path, "*.mp4"))
-    fake_videos = glob.glob(os.path.join(fake_dataset_path, "*.mp4"))
+    real_videos = sorted(glob.glob(os.path.join(real_dataset_path, "*.mp4")))
+    fake_videos = sorted(glob.glob(os.path.join(fake_dataset_path, "*.mp4")))
+
     vids = [(v, 0) for v in real_videos] + [(v, 1) for v in fake_videos]
     random.shuffle(vids)
 
